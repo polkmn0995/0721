@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>폼타입으로 검증</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .form-container {
+            max-width: 400px;
+            margin: 20px auto;
+            background-color: antiquewhite;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+
+        }
+
+        .form-container h2 {
+            text-align: center;
+
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            /* background-color: aquamarine; */
+            /* padding: 10px; */
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        label {
+            padding: 10px 0;
+        }
+
+        .submit {
+            width: 100%;
+            padding: 10px;
+            background-color: rgb(1, 95, 64);
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 10px;
+            font-size: 10px;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="form-container">
+        <h2>폼 타입 검증</h2>
+        <!-- 이메일 -->
+        <form onsubmit="return validateEmailForm()">
+            <div class="form-group">
+                <label for="email">이메일:</label>
+                <input type="email" id="email" name="email" required placeholder="이메일 주소를 입력하세요">
+                <p class="error-message" id="email-error">올바른 이메일 주소를 입력하세요</p>
+            </div>
+            <button type="submit" class="submit">제출</button>
+        </form>
+        <!-- 전화번호 -->
+        <form onsubmit="return validateTelForm()">
+            <div class="form-group">
+                <label for="tel">전화번호:</label>
+                <input type="tel" id="tel" name="tel" required placeholder="전화번호를 입력하세요.(예:010-1234-5678)">
+                <p class="error-message" id="tel-error">올바른 전화번호를 입력하세요</p>
+            </div>
+            <button type="submit" class="submit">제출</button>
+        </form>
+        <!-- url -->
+        <form onsubmit="return validateURLForm()">
+            <div class="form-group">
+                <label for="url">URL:</label>
+                <input type="url" id="url" name="url" required placeholder="유효한 URL을 입력하세요 (예: https://www.example.com)">
+                <p class="error-message" id="url-error">올바른 URL를 입력하세요</p>
+            </div>
+            <button type="submit" class="submit">제출</button>
+        </form>
+    </div>
+    <script>
+        function validateEmailForm() {
+            const emailInput = document.getElementById("email");
+            const errorMessage = document.getElementById("email-error");
+            const email = emailInput.value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (!emailRegex.test(email)) {
+                errorMessage.style.display = "block";
+                return false; // 폼 제출방지
+            }
+            else {
+                errorMessage.style.display = "none";
+                return true; // 폼 제출허용
+            }
+
+        }
+        // 전화번호
+        function validateTelForm() {
+            const telInput = document.getElementById("tel");
+            const errorMessage = document.getElementById("tel-error");
+            const tel = telInput.value;
+            const telRegex = /^\d{3}-\d{3,4}-\d{4}$/;
+
+            if (!telRegex.test(tel)) {
+                errorMessage.style.display = "block";
+                return false; // 폼 제출방지
+            }
+            else {
+                errorMessage.style.display = "none";
+                return true; // 폼 제출허용
+            }
+        }
+        // URL
+        function validateURLForm() {
+            const urlInput = document.getElementById("url");
+            const errorMessage = document.getElementById("url-error");
+            const url = urlInput.value;
+            const urlRegex = /^(https?:\/\/)?([a-z\d.-]+\.[a-z]{2,})(:\d{2,5})?([/?].*)?$/i;
+
+            if (!urlRegex.test(url)) {
+                errorMessage.style.display = "block";
+                return false; // 폼 제출방지
+            }
+            else {
+                errorMessage.style.display = "none";
+                return true; // 폼 제출허용
+            }
+        }
+
+    </script>
+</body>
+
+</html>
